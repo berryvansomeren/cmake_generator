@@ -13,11 +13,11 @@ def str_new_target(
     all_targets : Dict[ str, Target ]
 ) -> str:
 
-    target_str = cmake_format( """
-# ----------------------------------------------------------------
-# New Target: {SHAKE_CMAKE_GENERATOR_target_name}
-""",
-       target_name = target.name
+    target_str = cmake_format(
+        "# ----------------------------------------------------------------\n"
+        "# New Target: {SHAKE_CMAKE_GENERATOR_target_name}\n"
+        "\n",
+        target_name = target.name
     )
 
     # gob the source files, and add the target
@@ -67,11 +67,7 @@ def str_new_target(
         if link_libraries:
             target_str += _str_target_link_libraries( target.name, link_libraries )
 
-    target_str += cmake_format( """
-set_property( TARGET {SHAKE_CMAKE_GENERATOR_target_name} PROPERTY CXX_STANDARD 17 )    
-""",
-        target_name = target.name
-    )
+    target_str += cmake_format( "set_property( TARGET {SHAKE_CMAKE_GENERATOR_target_name} PROPERTY CXX_STANDARD 17 ) \n", target_name = target.name )
     return target_str
 
 #----------------------------------------------------------------
@@ -105,9 +101,7 @@ def _str_add_target_executable(
     target_name             : str,
     source_variable_name    : str
 ) -> str:
-    add_target_string_template = """
-add_executable( {SHAKE_CMAKE_GENERATOR_target_name} ${SHAKE_CMAKE_GENERATOR_source_variable_name} )
-"""
+    add_target_string_template = "add_executable( {SHAKE_CMAKE_GENERATOR_target_name} ${SHAKE_CMAKE_GENERATOR_source_variable_name} )\n"
     return _str_generic_add_target( add_target_string_template, target_name, source_variable_name )
 
 #----------------------------------------------------------------
@@ -122,9 +116,7 @@ def _str_add_target_shared_library(
     target_name             : str,
     source_variable_name    : str
 ) -> str:
-    add_target_string_template = """
-add_library( {SHAKE_CMAKE_GENERATOR_target_name} SHARED ${SHAKE_CMAKE_GENERATOR_source_variable_name} )
-"""
+    add_target_string_template = "add_library( {SHAKE_CMAKE_GENERATOR_target_name} SHARED ${SHAKE_CMAKE_GENERATOR_source_variable_name} )\n"
     return _str_generic_add_target( add_target_string_template, target_name, source_variable_name )
 
 #----------------------------------------------------------------
@@ -132,9 +124,7 @@ def _str_add_target_static_library(
     target_name             : str,
     source_variable_name    : str
 ) -> str:
-    add_target_string_template = """
-add_library( {SHAKE_CMAKE_GENERATOR_target_name} STATIC ${SHAKE_CMAKE_GENERATOR_source_variable_name} )
-"""
+    add_target_string_template = "add_library( {SHAKE_CMAKE_GENERATOR_target_name} STATIC ${SHAKE_CMAKE_GENERATOR_source_variable_name} )\n"
     return _str_generic_add_target( add_target_string_template, target_name, source_variable_name )
 
 #----------------------------------------------------------------
@@ -142,9 +132,7 @@ def _str_add_target_python_module(
     target_name             : str,
     source_variable_name    : str
 ) -> str:
-    add_target_string_template = """
-pybind11_add_module( {SHAKE_CMAKE_GENERATOR_target_name} MODULE ${SHAKE_CMAKE_GENERATOR_source_variable_name} )
-"""
+    add_target_string_template = "pybind11_add_module( {SHAKE_CMAKE_GENERATOR_target_name} MODULE ${SHAKE_CMAKE_GENERATOR_source_variable_name} )\n"
     return _str_generic_add_target( add_target_string_template, target_name, source_variable_name )
 
 #----------------------------------------------------------------
@@ -152,11 +140,11 @@ def _str_target_link_libraries(
     target_name     : str,
     library_names   : List[ str ]
 ):
-    link_libraries_template = """
-target_link_libraries( {SHAKE_CMAKE_GENERATOR_target_name} PRIVATE 
-{SHAKE_CMAKE_GENERATOR_library_names} 
-)
-"""
+    link_libraries_template = (
+        "target_link_libraries( {SHAKE_CMAKE_GENERATOR_target_name} PRIVATE\n"
+        "{SHAKE_CMAKE_GENERATOR_library_names}\n"
+        ")\n"
+    )
     link_libraries_string = cmake_format(
         link_libraries_template,
         target_name     = target_name,
@@ -170,9 +158,7 @@ def _str_set_target_properties(
     property_name   : str,
     property_value  : str
 ):
-    set_target_properties_template = """
-set_target_properties( {SHAKE_CMAKE_GENERATOR_target_name} PROPERTIES {SHAKE_CMAKE_GENERATOR_property_name} {SHAKE_CMAKE_GENERATOR_property_value} )
-"""
+    set_target_properties_template = "set_target_properties( {SHAKE_CMAKE_GENERATOR_target_name} PROPERTIES {SHAKE_CMAKE_GENERATOR_property_name} {SHAKE_CMAKE_GENERATOR_property_value} )\n"
     set_target_properties_str = cmake_format(
         set_target_properties_template,
         target_name     = target_name,
@@ -186,11 +172,11 @@ def _str_target_include_directories(
     target_name         : str,
     include_directories : List[ str ]
 ):
-    include_directories_template = """
-target_include_directories( {SHAKE_CMAKE_GENERATOR_target_name} PRIVATE 
-{SHAKE_CMAKE_GENERATOR_include_directories} 
-)
-"""
+    include_directories_template = (
+        "target_include_directories( {SHAKE_CMAKE_GENERATOR_target_name} PRIVATE\n"
+        "{SHAKE_CMAKE_GENERATOR_include_directories}\n"
+        ")\n"
+    )
     include_directories_string = cmake_format(
         include_directories_template,
         target_name         = target_name,

@@ -37,7 +37,7 @@ class CMakeGenerator:
         }
         # we don't write any cmake for header only libraries
         if target.__class__ in dispatcher:
-            self._write( dispatcher[ target.__class__ ]( target, all_targets ) )
+            self._write( dispatcher[ target.__class__ ]( target, all_targets ) + "\n" )
 
     # ----------------------------------------------------------------
     def generate( self, target_definitions : List[ Target ] ) -> None:

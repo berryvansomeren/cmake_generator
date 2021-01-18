@@ -23,9 +23,7 @@ def str_file_glob_recurse(
     file_variable_name : str,
     glob_expression : str
 ) -> str:
-    set_file_template = """
-file( GLOB_RECURSE {SHAKE_CMAKE_GENERATOR_file_variable_name} {SHAKE_CMAKE_GENERATOR_glob_expression} )
-"""
+    set_file_template = "file( GLOB_RECURSE {SHAKE_CMAKE_GENERATOR_file_variable_name} {SHAKE_CMAKE_GENERATOR_glob_expression} )\n"
     return _str_list_files( set_file_template, file_variable_name, glob_expression )
 
 #----------------------------------------------------------------
@@ -33,7 +31,5 @@ def str_file_glob(
     file_variable_name: str,
     glob_expression: str
 ) -> str:
-    set_file_template = """
-file( GLOB {SHAKE_CMAKE_GENERATOR_file_variable_name} {SHAKE_CMAKE_GENERATOR_glob_expression} )
-"""
+    set_file_template = "file( GLOB {SHAKE_CMAKE_GENERATOR_file_variable_name} {SHAKE_CMAKE_GENERATOR_glob_expression} )\n"
     return _str_list_files( set_file_template, file_variable_name, glob_expression )
