@@ -14,3 +14,7 @@ from cmake_generator.target import (
 from cmake_generator.target_type import (
     TargetType
 )
+
+from cmake_generator.project import (
+    Project
+)

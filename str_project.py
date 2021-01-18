@@ -1,10 +1,5 @@
 from cmake_generator.cmake_format import cmake_format
-
-#----------------------------------------------------------------
-class Version:
-    def __init__( self, major, minor ):
-        self.major = major
-        self.minor = minor
+from cmake_generator.version import Version
 
 #----------------------------------------------------------------
 def str_project(

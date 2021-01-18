@@ -61,10 +61,10 @@ class ImportTarget:
     ) :
         self.name                       = name
         self.src_dir_path               = src_dir_path
-        self.include_dirs               = include_dirs
+        self.include_dirs               = include_dirs or [ src_dir_path + "include" ]
         self.pre_import_inline_cmake    = pre_import_inline_cmake
         self.post_import_inline_cmake   = post_import_inline_cmake
-        self.subtargets                = subtargets or [ name ]
+        self.subtargets                 = subtargets or [ name ]
 
 #----------------------------------------------------------------
 class PythonTarget:
