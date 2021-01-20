@@ -44,7 +44,7 @@ class NewTarget:
         self.properties     = properties    or {}
 
 #----------------------------------------------------------------
-def StaticLibrary(
+def Executable(
     name            : str,
     src_dir_path    : str,
     include_dirs    : List[ str ]       = None,
@@ -53,7 +53,7 @@ def StaticLibrary(
 ):
     return NewTarget(
         name            = name,
-        target_type     = NewTargetType.StaticLibrary,
+        target_type     = NewTargetType.Executable,
         src_dir_path    = src_dir_path,
         include_dirs    = include_dirs,
         dependencies    = dependencies,
@@ -78,7 +78,7 @@ def SharedLibrary(
     )
 
 #----------------------------------------------------------------
-def Executable(
+def StaticLibrary(
     name            : str,
     src_dir_path    : str,
     include_dirs    : List[ str ]       = None,
@@ -87,7 +87,24 @@ def Executable(
 ):
     return NewTarget(
         name            = name,
-        target_type     = NewTargetType.Executable,
+        target_type     = NewTargetType.StaticLibrary,
+        src_dir_path    = src_dir_path,
+        include_dirs    = include_dirs,
+        dependencies    = dependencies,
+        properties      = properties
+    )
+
+#----------------------------------------------------------------
+def PythonModule(
+    name            : str,
+    src_dir_path    : str,
+    include_dirs    : List[ str ]       = None,
+    dependencies    : List[ str ]       = None,
+    properties      : Dict[ str, str ]  = None
+):
+    return NewTarget(
+        name            = name,
+        target_type     = NewTargetType.PythonModule,
         src_dir_path    = src_dir_path,
         include_dirs    = include_dirs,
         dependencies    = dependencies,

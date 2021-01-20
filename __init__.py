@@ -7,6 +7,7 @@ from cmake_generator.target import (
     Executable,
     HeaderOnlyLibrary,
     ImportTarget,
+    PythonModule,
     SharedLibrary,
     StaticLibrary,
     Target
