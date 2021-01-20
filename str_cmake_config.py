@@ -10,6 +10,7 @@ def str_cmake_config(
         "# ----------------------------------------------------------------\n"
         "# This CMake file is generated automatically by the Shake3 CMake Generator\n"
         "# Don't change this file. Reconfigure the generator instead.\n"
+        "# For more info see: https://github.com/berryvansomeren/cmake_generator\n"
         "\n"
         "cmake_minimum_required( VERSION 3.12 )\n"
         "\n"

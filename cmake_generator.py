@@ -1,3 +1,4 @@
+import logging
 from typing import Dict, List
 
 from cmake_generator.str_cmake_config   import str_cmake_config
@@ -17,17 +18,14 @@ class CMakeGenerator:
         cmake_destination_path : str,
         build_dir : str
     ):
-        self.file_writer = open( cmake_destination_path, 'w' )
+        self.cmake_destination_path = cmake_destination_path
+        self.cmake_text = ""
         self._write( str_cmake_config( build_dir ) )
         self._write( str_project( project_name, project_version ) )
 
     # ----------------------------------------------------------------
-    def __del__( self ):
-        self.file_writer.close()
-
-    # ----------------------------------------------------------------
     def _write( self, text : str ) -> None:
-        self.file_writer.write( text )
+        self.cmake_text += text
 
     # ----------------------------------------------------------------
     def _add_target( self, target : Target, all_targets :  Dict[ str, Target ] ) -> None:
@@ -43,11 +41,20 @@ class CMakeGenerator:
     def generate( self, target_definitions : List[ Target ] ) -> None:
 
         target_dictionary = {}
+        logging.info( "----------------------------------------------------------------" )
+        logging.info( "Creating registry of targets" )
         for target in target_definitions:
-                target_dictionary.update( { target.name : target} )
+            target_dictionary.update( { target.name : target} )
+            logging.info( "Added target to registry: {}".format( target.name ) )
 
+        logging.info( "----------------------------------------------------------------" )
+        logging.info( "Generating CMake output" )
         for target in target_definitions:
             self._add_target( target, target_dictionary )
+            logging.info( "Added target to CMake text: {}".format( target.name ) )
 
-
-
+        logging.info( "----------------------------------------------------------------" )
+        logging.info( "Writing CMake text to: {}".format( self.cmake_destination_path ) )
+        with open( self.cmake_destination_path, 'w' ) as file_writer:
+            file_writer.write( self.cmake_text )
+        logging.info( "Done!" )
