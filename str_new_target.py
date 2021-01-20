@@ -124,7 +124,7 @@ def _str_add_target_python_module(
     target_name             : str,
     source_variable_name    : str
 ) -> str:
-    add_target_string_template = "pybind11_add_module( {SHAKE_CMAKE_GENERATOR_target_name} MODULE ${SHAKE_CMAKE_GENERATOR_source_variable_name} )\n"
+    add_target_string_template = "pybind11_add_module( {SHAKE_CMAKE_GENERATOR_target_name} SHARED ${SHAKE_CMAKE_GENERATOR_source_variable_name} )\n"
     return _str_generic_add_target( add_target_string_template, target_name, source_variable_name )
 
 #----------------------------------------------------------------
