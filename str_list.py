@@ -7,7 +7,7 @@ from cmake_generator.quote          import quote
 def python_list_to_cmake_list(
     l : List[ Any ]
 ) -> str:
-    result = '\n'.join( [ str( e ) for e in l ] )
+    result = "\n".join( [ str( e ) for e in l ] )
     return result
 
 #----------------------------------------------------------------
@@ -17,7 +17,7 @@ def python_list_to_cmake_list_quoted(
 
     quoted_elements = []
     for e in l:
-        if e[0] == '$':
+        if e[0] == "$":
             quoted_elements.append( e )
         else:
             quoted_elements.append( quote( e ) )
@@ -30,7 +30,7 @@ def str_list(
     list_name : str,
     list_value : [ str ]
 ) -> str:
-    set_list_template = 'list( APPEND {SHAKE_CMAKE_GENERATOR_list_name} {SHAKE_CMAKE_GENERATOR_list_value} )'
+    set_list_template = "list( APPEND {SHAKE_CMAKE_GENERATOR_list_name} {SHAKE_CMAKE_GENERATOR_list_value} )"
     set_list_str = cmake_format(
         set_list_template,
         list_name = list_name,

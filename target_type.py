@@ -1,9 +1,8 @@
 from enum import auto, Enum
 
 #----------------------------------------------------------------
-class TargetType(Enum):
+class NewTargetType( Enum ):
     Executable          = auto()
-    HeaderOnlyLibrary   = auto()
     SharedLibrary       = auto()
     StaticLibrary       = auto()
     PythonModule        = auto()

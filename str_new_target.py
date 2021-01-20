@@ -4,8 +4,8 @@ from typing import Dict, List
 from cmake_generator.cmake_format import cmake_format
 from cmake_generator.str_list import python_list_to_cmake_list, python_list_to_cmake_list_quoted
 from cmake_generator.str_file import make_glob_expression, str_file_glob_recurse
-from cmake_generator.target import Target, HeaderOnlyTarget, NewTarget, ImportTarget
-from cmake_generator.target_type import TargetType
+from cmake_generator.target import Target, HeaderOnlyLibrary, NewTarget, ImportTarget
+from cmake_generator.target_type import NewTargetType
 
 #----------------------------------------------------------------
 def str_new_target(
@@ -21,7 +21,7 @@ def str_new_target(
     )
 
     # gob the source files, and add the target
-    source_variable_name = target.name + '_glob_files'
+    source_variable_name = target.name + "_glob_files"
     target_str += str_file_glob_recurse( source_variable_name, make_glob_expression( target.src_dir_path ) )
     target_str += _str_add_target( target, source_variable_name )
 
@@ -36,7 +36,7 @@ def str_new_target(
     for dependency_name in target.dependencies:
 
         if dependency_name not in all_targets:
-            raise ValueError( 'Target specification for dependency {} was not found'.format( dependency_name ) )
+            raise ValueError( "Target definition for dependency {} was not found".format( dependency_name ) )
 
         dependency = all_targets[ dependency_name ]
         include_dirs.extend( dependency.include_dirs )
@@ -50,11 +50,11 @@ def str_new_target(
         for dependency_name in target.dependencies:
 
             if dependency_name not in all_targets:
-                raise ValueError( 'Target specification for dependency {} was not found'.format( dependency_name ) )
+                raise ValueError( "Target specification for dependency {} was not found".format( dependency_name ) )
 
             dependency = all_targets[ dependency_name ]
 
-            if isinstance( dependency, HeaderOnlyTarget ):
+            if isinstance( dependency, HeaderOnlyLibrary ):
                 continue
 
             if isinstance( dependency, NewTarget ):
@@ -76,11 +76,10 @@ def _str_add_target(
     source_variable_name    : str
 ) -> str:
     return {
-        TargetType.Executable           : _str_add_target_executable,
-        TargetType.HeaderOnlyLibrary    : _str_add_target_header_only_library,
-        TargetType.SharedLibrary        : _str_add_target_shared_library,
-        TargetType.StaticLibrary        : _str_add_target_static_library,
-        TargetType.PythonModule         : _str_add_target_python_module
+        NewTargetType.Executable           : _str_add_target_executable,
+        NewTargetType.SharedLibrary        : _str_add_target_shared_library,
+        NewTargetType.StaticLibrary        : _str_add_target_static_library,
+        NewTargetType.PythonModule         : _str_add_target_python_module
     }[ target.target_type ]( target.name, source_variable_name )
 
 #----------------------------------------------------------------
@@ -103,13 +102,6 @@ def _str_add_target_executable(
 ) -> str:
     add_target_string_template = "add_executable( {SHAKE_CMAKE_GENERATOR_target_name} ${SHAKE_CMAKE_GENERATOR_source_variable_name} )\n"
     return _str_generic_add_target( add_target_string_template, target_name, source_variable_name )
-
-#----------------------------------------------------------------
-def _str_add_target_header_only_library(
-    target_name             : str,
-    source_variable_name    : str
-) -> str:
-    return '' # Do nothing because header only libraries don't get their own target!
 
 #----------------------------------------------------------------
 def _str_add_target_shared_library(

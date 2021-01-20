@@ -5,7 +5,7 @@ from cmake_generator.str_cmake_config   import str_cmake_config
 from cmake_generator.str_import_target  import str_import_target
 from cmake_generator.str_new_target     import str_new_target
 from cmake_generator.str_project        import str_project
-from cmake_generator.target             import ImportTarget, NewTarget, PythonTarget, Target
+from cmake_generator.target             import ImportTarget, NewTarget, Target
 from cmake_generator.version            import Version
 
 #----------------------------------------------------------------
@@ -33,12 +33,16 @@ class CMakeGenerator:
             NewTarget       : str_new_target,
             ImportTarget    : str_import_target
         }
-        # we don't write any cmake for header only libraries
+        # Note: we don't write a specific target for header only libraries
+        # You'll see them back in the include directories of the targets that depend on them though
         if target.__class__ in dispatcher:
             self._write( dispatcher[ target.__class__ ]( target, all_targets ) + "\n" )
 
     # ----------------------------------------------------------------
     def generate( self, target_definitions : List[ Target ] ) -> None:
+
+        logging.info( "----------------------------------------------------------------" )
+        logging.info( "Generating CMake text" )
 
         target_dictionary = {}
         logging.info( "----------------------------------------------------------------" )

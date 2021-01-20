@@ -4,15 +4,16 @@ from cmake_generator.cmake_generator import (
 )
 
 from cmake_generator.target import (
-    HeaderOnlyTarget,
+    Executable,
+    HeaderOnlyLibrary,
     ImportTarget,
-    NewTarget,
-    PythonTarget,
+    SharedLibrary,
+    StaticLibrary,
     Target
 )
 
 from cmake_generator.target_type import (
-    TargetType
+    NewTargetType
 )
 
 from cmake_generator.project import (
@@ -20,3 +21,4 @@ from cmake_generator.project import (
 )
 
 from cmake_generator.path import abs_path_str_from_rel_to_this_file
+absp = abs_path_str_from_rel_to_this_file # alias
