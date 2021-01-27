@@ -1,3 +1,4 @@
+import logging
 from textwrap import indent
 from typing import Dict, List
 
@@ -36,7 +37,8 @@ def str_new_target(
     for dependency_name in target.dependencies:
 
         if dependency_name not in all_targets:
-            raise ValueError( "Target definition for dependency {} was not found".format( dependency_name ) )
+            logging.warning( "Target specification for dependency {} was not found in generator registry. Assuming it's a package. No include dirs are added.".format( dependency_name ) )
+            continue
 
         dependency = all_targets[ dependency_name ]
         include_dirs.extend( dependency.include_dirs )
@@ -50,11 +52,14 @@ def str_new_target(
         for dependency_name in target.dependencies:
 
             if dependency_name not in all_targets:
-                raise ValueError( "Target specification for dependency {} was not found".format( dependency_name ) )
+                logging.warning( "Target specification for dependency {} was not found in generator registry. Assuming it's a package. Linking library by name.".format( dependency_name ) )
+                link_libraries.append( dependency_name )
+                continue
 
             dependency = all_targets[ dependency_name ]
 
             if isinstance( dependency, HeaderOnlyLibrary ):
+                # we don't link header only libraries by name
                 continue
 
             if isinstance( dependency, NewTarget ):
@@ -62,7 +67,6 @@ def str_new_target(
             if isinstance( dependency, ImportTarget ):
                 for subtarget in dependency.subtargets:
                     link_libraries.append( subtarget )
-            # we don't link header only libraries by name
 
         if link_libraries:
             target_str += _str_target_link_libraries( target.name, link_libraries )

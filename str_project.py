@@ -29,4 +29,8 @@ def str_project(
         version_minor   = version.minor,
         languages       = languages_str
     )
+
+    if Language.CUDA in languages:
+        set_project_str += "find_package( CUDAToolkit )\n\n"
+
     return set_project_str

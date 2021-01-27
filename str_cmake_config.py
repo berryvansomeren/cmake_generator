@@ -12,7 +12,7 @@ def str_cmake_config(
         "# Don't change this file. Reconfigure the generator instead.\n"
         "# For more info see: https://github.com/berryvansomeren/cmake_generator\n"
         "\n"
-        "cmake_minimum_required( VERSION 3.12 )\n"
+        "cmake_minimum_required( VERSION 3.17 )\n"
         "\n"
         "# ----------------------------------------------------------------\n"
         "# CMake configuration\n"

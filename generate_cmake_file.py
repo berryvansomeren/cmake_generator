@@ -38,8 +38,9 @@ def generate_cmake_file( cmake_project_definition : Project ) -> None:
         # Note: we don't write a specific target for header only libraries
         # You'll see them back in the include directories of the targets that depend on them though
         if target.__class__ in dispatcher :
+            logging.info( "Adding target to CMake text: {}".format( target.name ) )
             cmake_text += dispatcher[ target.__class__ ]( target, target_dictionary ) + "\n"
-        logging.info( "Added target to CMake text: {}".format( target.name ) )
+
 
     logging.info( "----------------------------------------------------------------" )
     logging.info( "Writing CMake text to: {}".format( cmake_project_definition.destination_cmake_lists_file_path ) )
