@@ -19,7 +19,7 @@ def generate_cmake_file( cmake_project_definition : Project ) -> None:
 
     cmake_text = ""
     cmake_text += str_cmake_config( cmake_project_definition.build_directory_path )
-    cmake_text += str_project( cmake_project_definition.project_name, cmake_project_definition.version )
+    cmake_text += str_project( cmake_project_definition.project_name, cmake_project_definition.version, cmake_project_definition.languages )
 
     logging.info( "----------------------------------------------------------------" )
     logging.info( "Creating registry of targets" )
