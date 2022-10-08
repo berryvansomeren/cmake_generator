@@ -32,4 +32,5 @@ pyshake_target_definition = PythonModule(
 )
 ```
 
-The generator can gather many of such target specifications and generate the corrresponding CMakeLists.txt.
+The generator can gather many of such target specifications and generate the corrresponding CMakeLists.txt.  
+While the generator was developed for _shake_, it should be usable for other projects too. 
